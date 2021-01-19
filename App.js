@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import CrowdHistory, { crowdHistoryMapper } from './components/CrowdHistory';
-import clubCapacity from './mockdata/clubCapacity.js';
+import clubCapacity from './mockdata/clubCapacity';
 
 const styles = StyleSheet.create({
   container: {
