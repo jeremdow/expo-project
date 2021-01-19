@@ -1,23 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
-import CrowdHistoryPropTypes from './propTypes';
 import styles, { height } from './styles';
-import { getDay, getHours, orderList, weekFromMondayToSunday } from './utils';
+import { orderList, weekFromMondayToSunday } from './utils';
 
-function CrowdHistory({ clubCapacity: { crowdHistory, labels } }) {
-  const [activeDay, setActiveDay] = useState();
-  const [currentDay, setCurrentDay] = useState();
-  const [currentHour, setCurrentHour] = useState();
-
-  useEffect(() => {
-    const date = new Date();
-    // @TODO: refactor this state {day, time}, selected
-    setCurrentDay(getDay(date));
-    setActiveDay(getDay(date));
-    setCurrentHour(getHours(date));
-  }, []);
-  const currentData = crowdHistory[activeDay] || new Array(24).fill(0);
-
+function CrowdHistory(props) {
   return (
     <View style={styles.pfCrowdHistory} className="pf-crowd-history">
       <Text style={styles.pfSubheadingSm} className="pf-subheading-sm">
@@ -29,15 +15,15 @@ function CrowdHistory({ clubCapacity: { crowdHistory, labels } }) {
             key={day}
             style={[
               styles.button,
-              day === currentDay ? styles.buttonCurrent : null,
+              day === props.currentDay ? styles.buttonCurrent : null,
             ]}
-            onPress={() => setActiveDay(day)}
+            onPress={() => props.setActiveDay(day)}
           >
             <Text
               style={[
                 styles.buttonText,
-                day === currentDay ? styles.buttonTextCurrent : null,
-                day === activeDay ? styles.buttonTextActive : null,
+                day === props.currentDay ? styles.buttonTextCurrent : null,
+                day === props.activeDay ? styles.buttonTextActive : null,
               ]}
             >
               {day.substring(0, 3)}
@@ -49,18 +35,18 @@ function CrowdHistory({ clubCapacity: { crowdHistory, labels } }) {
         <View>
           <View style={styles.pfChart} className="pf-chart">
             {orderList(
-              currentData.map((size, index) => (
+              props.currentData.map((size, index) => (
                 <View
-                  key={labels[index]}
+                  key={props.labels[index]}
                   style={styles.pfBar}
                   className="pf-bar"
                 >
                   <View
-                    id={labels[index]}
+                    id={props.labels[index]}
                     style={[
                       styles.meter,
                       height(size),
-                      currentHour === index + 1 ? styles.current : null,
+                      props.currentHour === index + 1 ? styles.current : null,
                     ]}
                   />
                 </View>
@@ -68,7 +54,7 @@ function CrowdHistory({ clubCapacity: { crowdHistory, labels } }) {
             )}
           </View>
           <View style={styles.labels}>
-            {orderList(labels).map(
+            {orderList(props.labels).map(
               (label, index) =>
                 (index + 1) % 3 === 0 && (
                   <Text key={label} style={styles.label}>
@@ -85,7 +71,5 @@ function CrowdHistory({ clubCapacity: { crowdHistory, labels } }) {
     </View>
   );
 }
-
-CrowdHistory.propTypes = CrowdHistoryPropTypes;
 
 export default CrowdHistory;
