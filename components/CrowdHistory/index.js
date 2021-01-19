@@ -180,6 +180,7 @@ function CrowdHistory({ clubCapacity: { crowdHistory, labels } }) {
       <View style={styles.pfTabs}>
         {weekFromMondayToSunday().map((day) => (
           <TouchableHighlight
+            key={day}
             style={[
               styles.button,
               day === currentDay ? styles.buttonCurrent : null,
@@ -224,7 +225,7 @@ function CrowdHistory({ clubCapacity: { crowdHistory, labels } }) {
             {orderList(labels).map(
               (label, index) =>
                 (index + 1) % 3 === 0 && (
-                  <Text key={index} style={styles.label}>
+                  <Text key={label} style={styles.label}>
                     {label}
                   </Text>
                 ),
