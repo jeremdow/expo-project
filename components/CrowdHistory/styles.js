@@ -82,4 +82,8 @@ const styles = StyleSheet.create({
   },
 });
 
+export function height(size) {
+  return { height: `${size}%` };
+}
+
 export default styles;
