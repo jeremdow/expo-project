@@ -26,11 +26,13 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#9f1b96',
     // borderBottom: '1px dashed #adafaf',
+    height: '100%',
   },
   pfBar: {
     display: 'flex',
     flexDirection: 'column-reverse',
     flexBasis: '3%',
+    overflow: 'visible',
   },
   meter: {
     backgroundColor: '#5c2e85',
@@ -40,8 +42,43 @@ const styles = StyleSheet.create({
   current: {
     backgroundColor: '#9f1b96',
   },
+  labels: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   label: {
-    fontSize: 4,
+    fontSize: 12,
+    lineHeight: 21,
+    // position: 'absolute',
+    // bottom: -20,
+  },
+  pfTabs: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20, // 1.25rem
+    padding: 0,
+  },
+  button: {
+    width: 36,
+    alignItems: 'center',
+  },
+  buttonCurrent: {
+    backgroundColor: '#5c2e85',
+  },
+  buttonText: {
+    // width: 30,
+    lineHeight: 22,
+    padding: 0,
+    textTransform: 'uppercase',
+  },
+  buttonTextCurrent: {
+    color: '#fff',
+  },
+  buttonTextActive: {
+    textDecorationLine: 'underline',
+    textDecorationColor: '#5c2e85',
   },
 });
 
