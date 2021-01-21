@@ -1,9 +1,10 @@
 import React from 'react';
 import { orderList, weekFromMondayToSunday } from './utils';
+import CrowdHistoryPropTypes from './propTypes';
 
 const t = (k) => k;
 
-function CrowdHistory(props) {
+function CrowdHistory({ visits, selectedTab, setSelectedTab, labels, now }) {
   return (
     <div className="pf-crowd-history">
       <h3 className="pf-subheading-sm">{t('CrowdHistory')}</h3>
@@ -14,9 +15,9 @@ function CrowdHistory(props) {
             key={day}
             type="button"
             role="tab"
-            className={day === props.activeDay ? 'active' : null}
-            aria-selected={day === props.activeDay}
-            onClick={() => props.setActiveDay(day)}
+            className={day === selectedTab ? 'active' : null}
+            aria-selected={day === selectedTab}
+            onClick={() => setSelectedTab(day)}
           >
             <span>{t(day)}</span>
           </button>
@@ -24,23 +25,23 @@ function CrowdHistory(props) {
       </div>
       <div
         role="tabpanel"
-        id={`control-${props.activeDay}`}
-        aria-labelledby={props.activeDay}
+        id={`control-${selectedTab}`}
+        aria-labelledby={selectedTab}
       >
         <figure>
           <div className="pf-chart">
             {orderList(
-              props.currentData.map((size, index) => (
-                <div className="pf-bar" key={props.labels[index]}>
+              visits.map((size, index) => (
+                <div className="pf-bar" key={labels[index]}>
                   <label
                     className={index % 3 !== 0 ? 'pf-visually-hidden' : ''}
-                    htmlFor={props.labels[index]}
+                    htmlFor={labels[index]}
                   >
-                    {t(props.labels[index])}
+                    {t(labels[index])}
                   </label>
                   <meter
-                    className={props.currentTime ? `current` : ''}
-                    id={props.labels[index]}
+                    className={now.hours === index + 1 ? 'current' : ''}
+                    id={labels[index]}
                     style={{ height: size ? `${size}%` : '0%' }}
                   />
                 </div>
@@ -53,5 +54,7 @@ function CrowdHistory(props) {
     </div>
   );
 }
+
+CrowdHistory.propTypes = CrowdHistoryPropTypes;
 
 export default CrowdHistory;

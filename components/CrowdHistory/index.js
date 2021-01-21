@@ -1,34 +1,38 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { getDay, getHours } from './utils';
 import CrowdHistoryView from './CrowdHistory';
-import CrowdHistoryPropTypes from './propTypes';
 
 function CrowdHistory({ clubCapacity: { crowdHistory, labels } }) {
-  const [activeDay, setActiveDay] = useState();
-  const [currentDay, setCurrentDay] = useState();
-  const [currentHour, setCurrentHour] = useState();
+  const [activeDay, setActiveDay] = useState('');
+  const [dateTime, setDateTime] = useState({});
 
   useEffect(() => {
     const date = new Date();
-    // @TODO: refactor this state {day, time}, selected
-    setCurrentDay(getDay(date));
     setActiveDay(getDay(date));
-    setCurrentHour(getHours(date));
+    setDateTime({ day: getDay(date), hours: getHours(date) });
   }, []);
   const currentData = crowdHistory[activeDay] || new Array(24).fill(0);
 
   return (
     <CrowdHistoryView
-      currentData={currentData}
-      activeDay={activeDay}
-      setActiveDay={setActiveDay}
-      currentDay={currentDay}
-      currentHour={currentHour}
+      visits={currentData}
+      selectedTab={activeDay}
+      setSelectedTab={setActiveDay}
       labels={labels}
+      now={dateTime}
     />
   );
 }
 
-CrowdHistory.propTypes = CrowdHistoryPropTypes;
+CrowdHistory.propTypes = {
+  clubCapacity: PropTypes.shape({
+    crowdHistory: PropTypes.shape({
+      day: PropTypes.arrayOf(PropTypes.number),
+    }),
+    maxCapacity: PropTypes.number,
+    labels: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+};
 
 export default CrowdHistory;

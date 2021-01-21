@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 
 const CrowdHistoryPropTypes = {
-  clubCapacity: PropTypes.shape({
-    crowdHistory: PropTypes.object,
-    maxCapacity: PropTypes.number,
-    labels: PropTypes.array,
-  }).isRequired,
+  visits: PropTypes.arrayOf(PropTypes.number),
+  selectedTab: PropTypes.string,
+  setSelectedTab: PropTypes.func,
+  labels: PropTypes.arrayOf(PropTypes.string),
+  now: PropTypes.shape({
+    day: PropTypes.string,
+    hours: PropTypes.number,
+  }),
 };
 
 export default CrowdHistoryPropTypes;

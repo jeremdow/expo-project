@@ -2,8 +2,9 @@ import React from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
 import styles, { height } from './styles';
 import { orderList, weekFromMondayToSunday } from './utils';
+import CrowdHistoryPropTypes from './propTypes';
 
-function CrowdHistory(props) {
+function CrowdHistory({ visits, selectedTab, setSelectedTab, labels, now }) {
   return (
     <View style={styles.pfCrowdHistory} className="pf-crowd-history">
       <Text style={styles.pfSubheadingSm} className="pf-subheading-sm">
@@ -15,15 +16,15 @@ function CrowdHistory(props) {
             key={day}
             style={[
               styles.button,
-              day === props.currentDay ? styles.buttonCurrent : null,
+              day === now.day ? styles.buttonCurrent : null,
             ]}
-            onPress={() => props.setActiveDay(day)}
+            onPress={() => setSelectedTab(day)}
           >
             <Text
               style={[
                 styles.buttonText,
-                day === props.currentDay ? styles.buttonTextCurrent : null,
-                day === props.activeDay ? styles.buttonTextActive : null,
+                day === now.day ? styles.buttonTextCurrent : null,
+                day === selectedTab ? styles.buttonTextActive : null,
               ]}
             >
               {day.substring(0, 3)}
@@ -35,18 +36,18 @@ function CrowdHistory(props) {
         <View>
           <View style={styles.pfChart} className="pf-chart">
             {orderList(
-              props.currentData.map((size, index) => (
+              visits.map((size, index) => (
                 <View
-                  key={props.labels[index]}
+                  key={labels[index]}
                   style={styles.pfBar}
                   className="pf-bar"
                 >
                   <View
-                    id={props.labels[index]}
+                    id={labels[index]}
                     style={[
                       styles.meter,
                       height(size),
-                      props.currentHour === index + 1 ? styles.current : null,
+                      now.hours === index + 1 ? styles.current : null,
                     ]}
                   />
                 </View>
@@ -54,7 +55,7 @@ function CrowdHistory(props) {
             )}
           </View>
           <View style={styles.labels}>
-            {orderList(props.labels).map(
+            {orderList(labels).map(
               (label, index) =>
                 (index + 1) % 3 === 0 && (
                   <Text key={label} style={styles.label}>
@@ -71,5 +72,7 @@ function CrowdHistory(props) {
     </View>
   );
 }
+
+CrowdHistory.propTypes = CrowdHistoryPropTypes;
 
 export default CrowdHistory;
