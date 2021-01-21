@@ -45,7 +45,7 @@ function CrowdHistory({ visits, selectedTab, setSelectedTab, labels, now }) {
                     style={{ height: size ? `${size}%` : '0%' }}
                   />
                 </div>
-              )),
+              ))
             )}
           </div>
           <figcaption>{t('crowdHistoryDescription')}</figcaption>

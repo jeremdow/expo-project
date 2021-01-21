@@ -33,7 +33,7 @@
     "react-native/no-raw-text": 2,
     "prettier/prettier": ["error", {
       "singleQuote": true,
-      "trailingComma": "all"
+      "trailingComma": "es5"
     }]
   }
 }
