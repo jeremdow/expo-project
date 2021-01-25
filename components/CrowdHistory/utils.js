@@ -50,6 +50,10 @@ export function orderList(list) {
   return newList;
 }
 
+export const labels = range(0, 24).map((hour) =>
+  moment(hour, ['H']).format('hA'),
+);
+
 const crowdHistoryMapper = (data) => {
   const maxCapacity = getMaxCapacity(data.maxCapacity, data.crowdHistory);
   const crowdHistoryByWeek = groupBy(data.crowdHistory, (p) => p.weekDay);
@@ -58,7 +62,7 @@ const crowdHistoryMapper = (data) => {
     weekData[day] = getHourValuesByDay(crowdHistoryByWeek[day], maxCapacity);
   });
 
-  const labels = range(0, 24).map((hour) => moment(hour, ['H']).format('hA'));
+  // const labels = range(0, 24).map((hour) => moment(hour, ['H']).format('hA'));
 
   return {
     ...data,
